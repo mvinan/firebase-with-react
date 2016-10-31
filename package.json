@@ -1,0 +1,31 @@
+{
+  "name": "fire-base",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "webpack-dev-server --content-base build/ --colors --progress",
+    "build": "webpack --colors",
+    "start": "npm run build && npm run serve"
+  },
+  "keywords": [
+    "firebase",
+    "babel",
+    "webpack",
+    "react"
+  ],
+  "author": "Miguel Viñan",
+  "license": "MIT",
+  "dependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-loader": "^6.2.7",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "firebase": "^3.5.2",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
+  }
+}
