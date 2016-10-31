@@ -84,56 +84,44 @@
 	};
 	_firebase2.default.initializeApp(config);
 
-	var App = function (_Component) {
-	  _inherits(App, _Component);
+	var FileUpload = function (_Component) {
+	  _inherits(FileUpload, _Component);
 
-	  function App(props) {
-	    _classCallCheck(this, App);
+	  function FileUpload() {
+	    _classCallCheck(this, FileUpload);
 
-	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (FileUpload.__proto__ || Object.getPrototypeOf(FileUpload)).call(this));
 
 	    _this.state = {
-	      name: 'Miguel'
+	      uploadValue: 0
 	    };
 	    return _this;
 	  }
 
-	  _createClass(App, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      var _this2 = this;
-
-	      var nameRef = _firebase2.default.database().ref().child('object').child('name');
-
-	      nameRef.on('value', function (snapshot) {
-	        _this2.setState({
-	          name: snapshot.val()
-	        });
-	      });
-	    }
+	  _createClass(FileUpload, [{
+	    key: 'handleOnChange',
+	    value: function handleOnChange(event) {}
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var name = this.state.name;
-
-	      return _react2.default.createElement(
+	      _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(
-	          'h1',
-	          null,
-	          'Hola ',
-	          name,
-	          '!'
-	        )
+	        _react2.default.createElement('progress', { value: this.state.uploadValue, max: '100' }),
+	        _react2.default.createElement('br', null),
+	        _react2.default.createElement('input', { type: 'file', onChange: this.handleOnChange.bind(this) }),
+	        _react2.default.createElement('br', null),
+	        this.state.nessage,
+	        _react2.default.createElement('br', null),
+	        _react2.default.createElement('img', { width: '100', src: this.state.picture })
 	      );
 	    }
 	  }]);
 
-	  return App;
+	  return FileUpload;
 	}(_react.Component);
 
-	_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('root'));
+	_reactDom2.default.render(_react2.default.createElement(FileUpload, null), document.getElementById('root'));
 
 /***/ },
 /* 2 */

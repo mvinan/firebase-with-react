@@ -11,35 +11,51 @@ const config = {
 }
 firebase.initializeApp(config)
 
-class App extends Component {
+class FileUpload extends Component{
   constructor(){
     super()
     this.state = {
-      name: '',
-      lastName: ''
+      uploadValue: 0
     }
   }
 
-  componentWillMount(){
-    const nameRef = firebase.database().ref().child('object')
+  handleOnChange(event){
+    const file = event.target.files[0]
+    const storageRef = firebase.storage().ref(`pictures/${file.name}`)
+    const task = storageRef.put(file)
 
-    nameRef.on('value', (snapshot) => {
+    task.on('state_changed', snapshot => {
+      let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
       this.setState({
-        name: snapshot.child('name').val(),
-        lastName: snapshot.child('lastName').val()
+        uploadValue: percentage
+      })
+    }, error => {
+      this.setState({
+        message: `Ha ocurrido un error: ${error.message}`
+      })
+    }, () => {
+      this.setState({
+        message: 'Archivo subido',
+        picture: task.snapshot.downloadURL
       })
     })
   }
 
-  render() {
-    const {name, lastName} = this.state
+  render(){
+    const {message, uploadValue, picture} = this.state
     return (
       <div>
-        <h1>Hola {`${name} ${lastName}`}! Estamos con FireBase</h1>
+        <progress value={uploadValue} max='100'/>
+        <br/>
+        <input type='file' onChange={this.handleOnChange.bind(this)}/>
+        <br/>
+        {message}
+        <br/>
+        <img width='100' src={picture}/>
       </div>
-    );
+    )
   }
 }
 
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<FileUpload />, document.getElementById('root'))
